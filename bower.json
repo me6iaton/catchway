@@ -1,0 +1,22 @@
+{
+  "name": "catchway",
+  "version": "1.0.1",
+  "authors": [
+    "me6iaton <me6iaton@gmail.com>"
+  ],
+  "keywords": [
+    "modx"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "curl": "~0.8.12",
+    "bootstrap": "~3.3.2"
+  }
+}

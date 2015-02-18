@@ -2,13 +2,28 @@
 
 $settings = array();
 
-$tmp = array(/*
-  'some_setting' => array(
-    'xtype' => 'combo-boolean',
-    'value' => true,
-    'area' => 'catchway_main',
+$tmp = array(
+  'core_path' => array(
+    'value' => PKG_CORE_PATH,
+    'xtype' => 'textfield',
+    'area' => 'catchway.main',
   ),
-  */
+  'assets_url' => array(
+    'value' => PKG_ASSETS_URL,
+    'xtype' => 'textfield',
+    'area' => 'catchway.main',
+  ),
+//  'frontend_css' => array(
+//    'value' => PKG_ASSETS_URL . 'css/web/catchway.css',
+//    'xtype' => 'textfield',
+//    'area' => 'catchway.main',
+//  ),
+  'frontend_js' => array(
+    'value' => PKG_ASSETS_URL . 'js/web/catchway.js',
+    'xtype' => 'textfield',
+    'area' => 'catchway.main',
+  ),
+
 );
 
 foreach ($tmp as $k => $v) {
