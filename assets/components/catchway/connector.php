@@ -13,6 +13,6 @@ $modx->lexicon->load('catchway:default');
 $corePath = $modx->getOption('catchway_core_path', null, $modx->getOption('core_path') . 'components/catchway/');
 $path = $modx->getOption('processorsPath', $catchway->config, $corePath . 'processors/');
 $modx->request->handleRequest(array(
-	'processors_path' => $path,
-	'location' => '',
+  'processors_path' => $path,
+  'location' => '',
 ));
