@@ -3,6 +3,8 @@ $modx->log(modX::LOG_LEVEL_ERROR, 'catchway test 4');
 //error_log('catchway test 2');
 switch ($modx->event->name) {
   case 'OnHandleRequest':
+    $catchway_frontend_js = $modx->getOption('catchway_frontend_js');
+    $modx->regClientScript($modx->getOption('catchway_frontend_js'));
     if($modx->context->key == 'mgr') break;
     $url = $modx->makeUrl(98);
     if ($_REQUEST['q'] !== $url) {
