@@ -3,10 +3,10 @@
 $chunks = array();
 
 $tmp = array(
-/*	'tpl.catchway.item' => array(
-    'file' => 'item',
+	'tpl.catchway.modal' => array(
+    'file' => 'modal',
     'description' => '',
-  ),*/
+  ),
 );
 
 // Save chunks for setup options
