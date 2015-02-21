@@ -3,10 +3,11 @@
 /**
  * The base class for catchway.
  */
-class catchway {
+class Catchway {
   /* @var modX $modx */
   public $modx;
-
+  /** @var pdoFetch $pdoFetch */
+  public $pdoTools;
 
   /**
    * @param modX $modx
@@ -37,6 +38,47 @@ class catchway {
 
     $this->modx->addPackage('catchway', $this->config['modelPath']);
     $this->modx->lexicon->load('catchway:default');
+  }
+
+  /**
+   * Process and return the output from a Chunk by name.
+   *
+   * @param string $name The name of the chunk.
+   * @param array $properties An associative array of properties to process the Chunk with, treated as placeholders within the scope of the Element.
+   * @param boolean $fastMode If false, all MODX tags in chunk will be processed.
+   *
+   * @return string The processed output of the Chunk.
+   */
+  public function getChunk($name, array $properties = array(), $fastMode = false)
+  {
+    if (!$this->modx->parser) {
+      $this->modx->getParser();
+    }
+    if (!$this->pdoTools) {
+      $this->loadPdoTools();
+    }
+
+    return $this->pdoTools->getChunk($name, $properties, $fastMode);
+  }
+
+  /**
+   * Loads an instance of pdoTools
+   *
+   * @param array $config
+   *
+   * @return boolean
+   */
+  public function loadPdoTools($config = array())
+  {
+    if (!is_object($this->pdoTools) || !($this->pdoTools instanceof pdoTools)) {
+      /** @var pdoFetch $pdoFetch */
+      $fqn = $this->modx->getOption('pdoFetch.class', null, 'pdotools.pdofetch', true);
+      if ($pdoClass = $this->modx->loadClass($fqn, '', false, true)) {
+        $this->pdoTools = new $pdoClass($this->modx, $config);
+      }
+      return true;
+    }
+    return false;
   }
 
 }

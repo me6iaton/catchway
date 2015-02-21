@@ -13,14 +13,19 @@ $tmp = array(
     'xtype' => 'textfield',
     'area' => 'catchway.main',
   ),
-//  'frontend_css' => array(
-//    'value' => PKG_ASSETS_URL . 'css/web/catchway.css',
-//    'xtype' => 'textfield',
-//    'area' => 'catchway.main',
-//  ),
+  'frontend_css' => array(
+    'value' => PKG_ASSETS_URL . 'css/web/catchway.css',
+    'xtype' => 'textfield',
+    'area' => 'catchway.main',
+  ),
   'frontend_js' => array(
     'value' => PKG_ASSETS_URL . 'js/web/catchway.js',
     'xtype' => 'textfield',
+    'area' => 'catchway.main',
+  ),
+  'default_page' => array(
+    'value' => 1,
+    'xtype' => 'numberfield',
     'area' => 'catchway.main',
   ),
 

@@ -2,6 +2,7 @@
   var catchway = {
     config: {
       vendorUrl: '/assets/components/catchway/vendor/'
+      ,cookieExpires: 30
     }
     ,cityName: ''
     ,getCityName: function(){
@@ -17,14 +18,56 @@
         });
       });
     }
-    ,showModal: function(){
-      console.log('showModal')
-      $('#catchwayModal').modal()
+    ,setCookie: function (name, value, options) {
+      options = options || {};
+
+      if(!options.domain){
+        var parts = location.hostname.split('.');
+        var upperLevelDomain = parts.join('.');
+        options.domain = upperLevelDomain;
+      }
+
+      var expires = options.expires;
+      if (typeof expires == "number" && expires) {
+        var d = new Date();
+        d.setTime(date.getDate() + expires);
+        expires = options.expires = d;
+      }
+      if (expires && expires.toUTCString) {
+        options.expires = expires.toUTCString();
+      }
+
+      value = encodeURIComponent(value);
+
+      var updatedCookie = name + "=" + value;
+
+      for (var propName in options) {
+        updatedCookie += "; " + propName;
+        var propValue = options[propName];
+        if (propValue !== true) {
+          updatedCookie += "=" + propValue;
+        }
+      }
+
+      document.cookie = updatedCookie;
+    }
+    ,showModal: function (){
+        $('#catchwayModal').modal()
     }
     ,whenAll: function () {
       if (jQuery().modal && catchway.cityName) {
-        catchway.showModal()
+        catchway.addListeners();
+        catchway.showModal();
       }
+    }
+    ,addListeners: function(){
+      $("#catchwayModalButtonNo").click(function () {
+        $("#catchwayModalFind").fadeOut();
+        $("#catchwayModalChoice").fadeIn();
+      });
+      $("#catchwayModalButtonYes").click(function () {
+        window.location.replace('/?catchway_city=' + catchway.cityName);
+      });
     }
   };
 
@@ -45,6 +88,4 @@
       })
     }
   }
-
-
 })();

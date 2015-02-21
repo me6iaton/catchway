@@ -3,10 +3,10 @@
 $snippets = array();
 
 $tmp = array(
-/*	'catchway' => array(
-    'file' => 'catchway',
+  'getCities' => array(
+    'file' => 'getCities',
     'description' => '',
-  ),*/
+  ),
 );
 
 foreach ($tmp as $k => $v) {

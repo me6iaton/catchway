@@ -2,17 +2,41 @@
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#catchwayModal">Small modal
 </button>
 
-<div id="catchwayModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="catchwayModalLabel"
+<div id="catchwayModal" class="modal fade" tabindex="-1" role="dialog"
      aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
+  <div class="modal-dialog  modal-sm">
+    <div id="catchwayModalFind" class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
-        </button>
-        <h4 class="modal-title" id="catchwayModalLabel">Small modal</h4>
+        <h5 class="modal-title" id="catchwayModalLabelFind">
+          Ваш город:
+          <strong id="catchwayCityName">Санкт-Петербург</strong>,
+          <br/>мы угадали?
+        </h5>
       </div>
       <div class="modal-body">
-        ...
+        <div id="catchwayModalButtons">
+          <button type="button" id="catchwayModalButtonNo" class="btn btn-danger" >Нет</button>
+          <button type="button" id="catchwayModalButtonYes" class="btn btn-success">Да</button>
+        </div>
+      </div>
+    </div>
+    <div style="display: none" id="catchwayModalChoice" class="modal-content">
+      <div class="modal-header">
+        <h5 id="catchwayModalLabelChoice">
+          Выберете ваш город:
+        </h5>
+      </div>
+      <div class="modal-body">
+        <div id="catchwayModalCities">
+          [[pdoResources?
+          &parents=`0`
+          &limit=`100`
+          &tpl=`@INLINE
+          <a href="/">[[+pagetitle]]</a>
+          `
+          &where=`{"longtitle:=":"[[city]]"}`
+          ]]
+        </div>
       </div>
     </div>
   </div>
