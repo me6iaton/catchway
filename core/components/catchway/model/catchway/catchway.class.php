@@ -78,4 +78,27 @@ class Catchway {
       return true;
   }
 
+  public function getSityId ($context, $pagetitle){
+    $this->loadPdoTools([
+      'parents' => 0
+      , 'context' => $context
+      , 'limit' => 1
+      , 'return' => 'ids'
+      , 'where' => '{"pagetitle:=":"' . $pagetitle . '"}'
+    ]);
+    return $this->pdoTools->run();
+  }
+
+  public function getCities ($config = array()){
+    $field = $this->modx->getOption('catchway_default_field');
+    $fieldKey = $this->modx->getOption('catchway_default_field_key');
+    $config = array_merge(array(
+      'parents' => '0'
+      ,'limit' => '300'
+      ,'context' => $this->modx->context->key
+      ,'where' => array($field.':='=> $fieldKey)
+    ), $config);
+    $this->loadPdoTools($config);
+    return $this->pdoTools->run();
+  }
 }

@@ -1,7 +1,6 @@
 <!-- Small modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#catchwayModal">Small modal
 </button>
-
 <div id="catchwayModal" class="modal fade" tabindex="-1" role="dialog"
      aria-hidden="true">
   <div class="modal-dialog  modal-sm">
@@ -28,14 +27,9 @@
       </div>
       <div class="modal-body">
         <div id="catchwayModalCities">
-          [[pdoResources?
-          &parents=`0`
-          &limit=`100`
-          &tpl=`@INLINE
-          <a href="/">[[+pagetitle]]</a>
-          `
-          &where=`{"longtitle:=":"[[city]]"}`
-          ]]
+          <ul>
+            [[+cities]]
+          </ul>
         </div>
       </div>
     </div>

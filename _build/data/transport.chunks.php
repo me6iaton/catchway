@@ -3,8 +3,16 @@
 $chunks = array();
 
 $tmp = array(
-	'tpl.catchway.modal' => array(
+  'tpl.catchway.modal' => array(
     'file' => 'modal',
+    'description' => '',
+  ),
+  'tpl.catchway.modal.cities.row' => array(
+    'file' => 'modal_cities_row',
+    'description' => '',
+  ),
+  'tpl.catchway.cities.row' => array(
+    'file' => 'cities_row',
     'description' => '',
   ),
 );

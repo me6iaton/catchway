@@ -28,6 +28,16 @@ $tmp = array(
     'xtype' => 'numberfield',
     'area' => 'catchway.main',
   ),
+  'default_field' => array(
+    'value' => 'menutitle',
+    'xtype' => 'textfield',
+    'area' => 'catchway.main',
+  ),
+  'default_field_key' => array(
+    'value' => '+city+',
+    'xtype' => 'textfield',
+    'area' => 'catchway.main',
+  ),
 
 );
 
