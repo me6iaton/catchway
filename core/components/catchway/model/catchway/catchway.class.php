@@ -70,15 +70,12 @@ class Catchway {
    */
   public function loadPdoTools($config = array())
   {
-    if (!is_object($this->pdoTools) || !($this->pdoTools instanceof pdoTools)) {
       /** @var pdoFetch $pdoFetch */
       $fqn = $this->modx->getOption('pdoFetch.class', null, 'pdotools.pdofetch', true);
       if ($pdoClass = $this->modx->loadClass($fqn, '', false, true)) {
         $this->pdoTools = new $pdoClass($this->modx, $config);
       }
       return true;
-    }
-    return false;
   }
 
 }

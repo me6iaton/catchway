@@ -68,6 +68,9 @@
       $("#catchwayModalButtonYes").click(function () {
         window.location.replace('/?catchway_city=' + catchway.cityName);
       });
+      $('#catchwayModal').on('hidden.bs.modal', function (e) {
+        window.location.replace('/?catchway_city=default');
+      });
     }
   };
 
