@@ -1,11 +1,11 @@
 <?php
-$modx->log(modX::LOG_LEVEL_ERROR, 'catchway test 4');
 /* @var Catchway $Catchway */
 $Catchway = $modx->getService('catchway', 'Catchway', $modx->getOption('catchway_core_path', null, $modx->getOption('core_path') . 'components/catchway/') . 'model/catchway/');
 
 switch ($modx->event->name) {
   case 'OnHandleRequest':
     if ($context == 'mgr') break;
+
     $context = $modx->context->key;
     $cookieNameId = 'catchway-city-' . $context . '-id';
     $time = time() + 60 * 60 * 24 * 60;
@@ -38,9 +38,15 @@ switch ($modx->event->name) {
         ]);
         $id = $Catchway->pdoTools->run();
       }
-
+      // set new cookies
       setcookie('catchway-city-name', $city, $time, null, $domain);
       setcookie($cookieNameId, $id, $time, null, $domain);
+      // update user
+      if($profile = $modx->user->getOne('Profile')){
+        $profile->set('city', $city);
+        $profile->save();
+      }
+      // redirect
       $url = $modx->makeUrl($id);
       $modx->sendRedirect($url);
       break;
@@ -81,7 +87,17 @@ switch ($modx->event->name) {
         }
       }
     }
-
-
+    break;
+  case 'OnUserActivate':
+    if ($context == 'mgr') break;
+    // update user
+    if (isset($_COOKIE['catchway-city-name'])){
+      if ($profile = $modx->user->getOne('Profile')) {
+        if(!$profile->get('city')){
+          $profile->set('city', $city);
+          $profile->save();
+        }
+      }
+    }
     break;
 }
