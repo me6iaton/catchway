@@ -8,7 +8,7 @@
       <div class="modal-header">
         <h5 class="modal-title" id="catchwayModalLabelFind">
           Ваш город:
-          <strong id="catchwayCityName">Санкт-Петербург</strong>,
+           <strong id="catchwayCityName"> Санкт-Петербург</strong>
           <br/>мы угадали?
         </h5>
       </div>
