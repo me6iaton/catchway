@@ -7,7 +7,7 @@ $tmp = array(
     'file' => 'catchway',
     'description' => '',
     'events' => array(
-      'OnHandleRequest' => array()
+      'OnHandleRequest' => array('priority' => 1)
       ,'OnUserActivate' => array()
     )
   )
