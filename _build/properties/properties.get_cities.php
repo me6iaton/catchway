@@ -39,14 +39,6 @@ $tmp = array(
     'type' => 'numberfield'
   , 'value' => 1
   )
-, 'outputSeparator' => array(
-    'type' => 'textfield'
-  , 'value' => "\n"
-  )
-, 'toPlaceholder' => array(
-    'type' => 'textfield'
-  , 'value' => ''
-  )
 , 'parents' => array(
     'type' => 'textfield'
   , 'value' => '0'
