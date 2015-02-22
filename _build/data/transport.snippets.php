@@ -7,6 +7,10 @@ $tmp = array(
     'file' => 'get_cities',
     'description' => '',
   ),
+  'getCity' => array(
+    'file' => 'get_city',
+    'description' => '',
+  ),
 );
 
 foreach ($tmp as $k => $v) {
