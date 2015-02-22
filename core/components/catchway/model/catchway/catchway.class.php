@@ -90,15 +90,24 @@ class Catchway {
   }
 
   public function getCities ($config = array()){
+    $output = '';
     $field = $this->modx->getOption('catchway_default_field');
     $fieldKey = $this->modx->getOption('catchway_default_field_key');
     $config = array_merge(array(
-      'parents' => '0'
-      ,'limit' => '300'
+      'parents' => 0
+      ,'limit' => 300
       ,'context' => $this->modx->context->key
       ,'where' => array($field.':='=> $fieldKey)
+      ,'return' => 'data'
     ), $config);
     $this->loadPdoTools($config);
-    return $this->pdoTools->run();
+    $cities = $this->pdoTools->run();
+    foreach($cities as $item){
+      if($item['pagetitle'] == $_COOKIE['catchway-city-name']){
+        $item['selected'] = 'selected';
+      }
+      $output = $output . $this->getChunk($config['tpl'], $item, $config['fastMode']);
+    }
+    return $output;
   }
 }

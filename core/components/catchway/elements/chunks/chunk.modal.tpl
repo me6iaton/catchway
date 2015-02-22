@@ -28,7 +28,7 @@
       <div class="modal-body">
         <div id="catchwayModalCities">
           <ul>
-            [[+cities]]
+            [[+output]]
           </ul>
         </div>
       </div>

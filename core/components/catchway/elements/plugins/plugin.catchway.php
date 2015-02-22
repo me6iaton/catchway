@@ -68,7 +68,7 @@ switch ($modx->event->name) {
       }else {
         if ($catchwayJs = $modx->getOption('catchway_frontend_js')) {
           $cities = $Catchway->getCities(array('tpl'=>'tpl.catchway.modal.cities.row'));
-          $output = $Catchway->getChunk('tpl.catchway.modal', array('cities' => $cities), false);
+          $output = $Catchway->getChunk('tpl.catchway.modal', array('output' => $cities), true);
           $modx->regClientHTMLBlock($output);
           $modx->regClientScript($modx->getOption('catchway_assets_url') . 'vendor/curl/dist/curl-with-js-and-domReady/curl.js');
           $modx->regClientScript($catchwayJs);

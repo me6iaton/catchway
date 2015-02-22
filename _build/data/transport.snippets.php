@@ -4,7 +4,7 @@ $snippets = array();
 
 $tmp = array(
   'getCities' => array(
-    'file' => 'getCities',
+    'file' => 'get_cities',
     'description' => '',
   ),
 );

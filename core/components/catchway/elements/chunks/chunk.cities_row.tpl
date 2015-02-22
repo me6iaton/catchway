@@ -1,1 +1,1 @@
-<a href="/">[[+pagetitle]]</a>
+<option [[+selected]] value="[[+pagetitle]]">[[+pagetitle]]</option>
