@@ -14,20 +14,25 @@ switch ($modx->event->name) {
 
     // set city, if $_REQUEST['catchway_city']
     if ($city = $_REQUEST['catchway_city']) {
+      // clean old cookie in all contexts
+      $Catchway->loadPdoTools([
+        'class' => 'modContext'
+        , 'limit' => 100
+        , 'return' => 'data'
+      ]);
+      $contexts = $Catchway->pdoTools->run();
+      foreach ($contexts as $item) {
+        if ($item['key'] == 'mgr') continue;
+        setcookie('catchway-city-' . $item['key'] . '-id', '', time() - 3600, null, $domain);
+      }
+
       if ($city == 'default') {
         $id = $modx->getOption('catchway_default_page');
-      } else {
-        // clean old cookie in all contexts
-        $Catchway->loadPdoTools([
-          'class' => 'modContext'
-          , 'limit' => 100
-          , 'return' => 'data'
-        ]);
-        $contexts = $Catchway->pdoTools->run();
-        foreach ($contexts as $item) {
-          if ($item['key'] == 'mgr') continue;
-          setcookie('catchway-city-' . $item['key'] . '-id', '', time() - 3600, null, $domain);
+        if(!$id){
+          $modx->sendRedirect('/');
+          break;
         }
+      } else {
         // get city id
         $id = $Catchway->getSityId($context, $city);
       }
@@ -35,7 +40,7 @@ switch ($modx->event->name) {
       setcookie('catchway-city-name', $city, $time, null, $domain);
       setcookie($cookieNameId, $id, $time, null, $domain);
       // update user
-      if($profile = $modx->user->getOne('Profile')){
+      if ($profile = $modx->user->getOne('Profile')) {
         $profile->set('city', $city);
         $profile->save();
       }
@@ -58,6 +63,7 @@ switch ($modx->event->name) {
         // if $cookieNameId not found in this context, get city id
         $id = $Catchway->getSityId($context, $_COOKIE['catchway-city-name']);
         if ($id) {
+          setcookie($cookieNameId, $id, $time, null, $domain);
           $modx->sendRedirect($modx->makeUrl($id));
           break;
         } else {
@@ -65,7 +71,11 @@ switch ($modx->event->name) {
           if ($id = $modx->getOption('catchway_default_page')) {
             $res = $modx->getObject('modResource', array('id' => $id, 'context_key' => $context));
             if ($res) {
-              $modx->sendRedirect($modx->makeUrl($id, $context));
+              setcookie($cookieNameId, $id, $time, null, $domain);
+              $url = $modx->makeUrl($id, $context);
+              if ($url !== $_SERVER['REQUEST_URI']){
+                $modx->sendRedirect($url);
+              }
               break;
             }
           }

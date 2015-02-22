@@ -78,13 +78,14 @@ class Catchway {
       return true;
   }
 
-  public function getSityId ($context, $pagetitle){
+  public function getSityId ($context, $name){
+    $fieldCityname = $this->modx->getOption('catchway_default_field_cityname');
     $this->loadPdoTools([
       'parents' => 0
       , 'context' => $context
       , 'limit' => 1
       , 'return' => 'ids'
-      , 'where' => '{"pagetitle:=":"' . $pagetitle . '"}'
+      , 'where' => array($fieldCityname.':=' => $name)
     ]);
     return $this->pdoTools->run();
   }

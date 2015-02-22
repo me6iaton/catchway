@@ -11,3 +11,5 @@ $_lang['setting_catchway_default_field_key'] = 'Ключевое слово';
 $_lang['setting_catchway_default_field_key_desc'] = 'Ключевого слово для выборки нужных ресурсов';
 $_lang['setting_catchway_default_page'] = 'Ресурс для перехода по умолчанию';
 $_lang['setting_catchway_default_page_desc'] = 'Id ресурса на который будет совершен преход когда нужный ресурс не найден, если значение не задано, пользователю будет показан диалог выбора ресурсов.';
+$_lang['setting_catchway_default_field_cityname'] = 'Поле для города';
+$_lang['setting_catchway_default_field_cityname_desc'] = 'Поле для ввода названия города';
