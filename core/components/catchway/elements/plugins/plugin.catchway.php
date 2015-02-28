@@ -1,14 +1,13 @@
 <?php
-/* @var Catchway $Catchway */
-$Catchway = $modx->getService('catchway', 'Catchway', $modx->getOption('catchway_core_path', null, $modx->getOption('core_path') . 'components/catchway/') . 'model/catchway/');
-$modx->addPackage('catchway', $modx->getOption('catchway_core_path', null, $modx->getOption('core_path') . 'components/catchway/') . 'model/');
-$modx->getService('lexicon', 'modLexicon');
-$modx->lexicon->load('catchway:default');
 $context = $modx->context->key;
+$skipContexts = explode(',', $modx->getOption('catchway_skip_contexts'));
+if($skipContexts and in_array($context, $skipContexts)) return;
 
 switch ($modx->event->name) {
   case 'OnHandleRequest':
     if ($context == 'mgr') return;
+    /* @var Catchway $Catchway */
+    $Catchway = $modx->getService('catchway', 'Catchway', $modx->getOption('catchway_core_path', null, $modx->getOption('core_path') . 'components/catchway/') . 'model/catchway/');
     $cookieNameId = 'catchway-city-' . $context . '-id';
     $time = time() + 60 * 60 * 24 * 60;
     $parts = array_reverse(explode('.', $_SERVER['SERVER_NAME']));

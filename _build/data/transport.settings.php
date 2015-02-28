@@ -28,7 +28,11 @@ $tmp = array(
     'xtype' => 'textfield',
     'area' => 'catchway.main',
   )
-
+  ,'skip_contexts' => array(
+    'value' => '',
+    'xtype' => 'textfield',
+    'area' => 'catchway.main',
+  ),
 );
 
 foreach ($tmp as $k => $v) {
