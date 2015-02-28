@@ -9,6 +9,8 @@ $tmp = array(
     'events' => array(
       'OnHandleRequest' => array('priority' => 1)
       ,'OnUserActivate' => array()
+      ,'OnDocFormPrerender' => array()
+      ,'OnBeforeDocFormSave' => array()
     )
   )
 

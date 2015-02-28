@@ -1,12 +1,14 @@
 <?php
 /* @var Catchway $Catchway */
 $Catchway = $modx->getService('catchway', 'Catchway', $modx->getOption('catchway_core_path', null, $modx->getOption('core_path') . 'components/catchway/') . 'model/catchway/');
-
+$modx->addPackage('catchway', $modx->getOption('catchway_core_path', null, $modx->getOption('core_path') . 'components/catchway/') . 'model/');
+$modx->getService('lexicon', 'modLexicon');
+$modx->lexicon->load('catchway:default');
 $context = $modx->context->key;
-if ($context == 'mgr') return;
 
 switch ($modx->event->name) {
   case 'OnHandleRequest':
+    if ($context == 'mgr') return;
     $cookieNameId = 'catchway-city-' . $context . '-id';
     $time = time() + 60 * 60 * 24 * 60;
     $parts = array_reverse(explode('.', $_SERVER['SERVER_NAME']));
@@ -95,6 +97,7 @@ switch ($modx->event->name) {
     break;
 
   case 'OnUserActivate':
+    if ($context == 'mgr') return;
     // update user
     if (isset($_COOKIE['catchway-city-name'])){
       if ($profile = $modx->user->getOne('Profile')) {
@@ -104,5 +107,19 @@ switch ($modx->event->name) {
         }
       }
     }
+    break;
+
+  case 'OnDocFormPrerender':
+    $modx->controller->addJavascript($modx->getOption('catchway_assets_url') . 'js/mgr/catchway.js');
+    break;
+
+  case 'OnBeforeDocFormSave':
+    $resource =& $modx->event->params['resource'];
+    if (isset($_POST['catchway-city'])) {
+      $catchwayCity = $_POST['catchway-city'];
+    } else{
+      $catchwayCity = '0';
+    }
+    $resource->setProperties(array('catchway_city' => $catchwayCity), 'catchway', false);
     break;
 }

@@ -92,13 +92,11 @@ class Catchway {
 
   public function getCities ($config = array()){
     $output = '';
-    $field = $this->modx->getOption('catchway_default_field');
-    $fieldKey = $this->modx->getOption('catchway_default_field_key');
     $config = array_merge(array(
       'parents' => 0
       ,'limit' => 300
       ,'context' => $this->modx->context->key
-      ,'where' => array($field.':='=> $fieldKey)
+      ,'where' => array('properties:LIKE' => '%{"catchway_city":"1"}%')
       ,'return' => 'data'
     ), $config);
     $this->loadPdoTools($config);
