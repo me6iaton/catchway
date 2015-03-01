@@ -78,18 +78,47 @@ class Catchway {
       return true;
   }
 
-  public function getSityId ($context, $name){
+  /**
+   * @param string $name
+   * @return null|string
+   */
+  public function getContextKey($name){
     $fieldCityname = $this->modx->getOption('catchway_default_field_cityname');
-    $this->loadPdoTools([
+    $this->loadPdoTools(array(
       'parents' => 0
-      , 'context' => $context
-      , 'limit' => 1
-      , 'return' => 'ids'
-      , 'where' => array($fieldCityname.':=' => $name)
-    ]);
+    , 'limit' => 1
+    , 'return' => 'data'
+    , 'where' => array($fieldCityname . ':=' => $name)
+    ));
+    $res = $this->pdoTools->run();
+    if($res){
+      return $res[0]['context_key'];
+    }else{
+      return null;
+    }
+  }
+  /**
+   * @param string $name
+   * @param string $context
+   * @return array|bool|string
+   */
+  public function getSityId($name, $context)
+  {
+    $fieldCityname = $this->modx->getOption('catchway_default_field_cityname');
+    $this->loadPdoTools(array(
+      'parents' => 0
+    , 'context' => $context
+    , 'limit' => 1
+    , 'return' => 'ids'
+    , 'where' => array($fieldCityname . ':=' => $name)
+    ));
     return $this->pdoTools->run();
   }
 
+  /**
+   * @param array $config
+   * @return string
+   */
   public function getCities ($config = array()){
     $output = '';
     $config = array_merge(array(

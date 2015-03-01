@@ -1,7 +1,7 @@
 <?php
 $context = $modx->context->key;
 $skipContexts = explode(',', $modx->getOption('catchway_skip_contexts'));
-if($skipContexts and in_array($context, $skipContexts)) return;
+if ($skipContexts and in_array($context, $skipContexts)) return;
 
 switch ($modx->event->name) {
   case 'OnHandleRequest':
@@ -29,13 +29,13 @@ switch ($modx->event->name) {
 
       if ($city == 'default') {
         $id = $modx->getOption('catchway_default_page');
-        if(!$id){
+        if (!$id) {
           $modx->sendRedirect('/');
           break;
         }
       } else {
         // get city id
-        $id = $Catchway->getSityId($context, $city);
+        $id = $Catchway->getSityId($city, $context);
       }
       // set new cookies
       setcookie('catchway-city-name', $city, $time, null, $domain);
@@ -51,6 +51,24 @@ switch ($modx->event->name) {
       break;
     }
 
+    // redirect default city page
+    function redirectToDefaultCityPage(&$modx, $context, $cookieNameId, $time, $domain)
+    {
+      if ($id = $modx->getOption('catchway_default_page')) {
+        $res = $modx->getObject('modResource', array('id' => $id, 'context_key' => $context));
+        if ($res) {
+          setcookie($cookieNameId, $id, $time, null, $domain);
+          $url = $modx->makeUrl($id, $context);
+          if ($url !== $_SERVER['REQUEST_URI']) {
+            $modx->sendRedirect($url);
+          }
+          return true;
+        }
+      }
+    }
+
+    ;
+
     // redirect to city page
     if ($_SERVER['REQUEST_URI'] == '/') {
       if (isset($_COOKIE[$cookieNameId])) {
@@ -62,24 +80,30 @@ switch ($modx->event->name) {
         }
       } else if (isset($_COOKIE['catchway-city-name'])) {
         // if $cookieNameId not found in this context, get city id
-        $id = $Catchway->getSityId($context, $_COOKIE['catchway-city-name']);
+        $id = $Catchway->getSityId($_COOKIE['catchway-city-name'], $context);
         if ($id) {
           setcookie($cookieNameId, $id, $time, null, $domain);
           $modx->sendRedirect($modx->makeUrl($id));
           break;
-        } else {
-          // redirect default city page
-          if ($id = $modx->getOption('catchway_default_page')) {
-            $res = $modx->getObject('modResource', array('id' => $id, 'context_key' => $context));
-            if ($res) {
-              setcookie($cookieNameId, $id, $time, null, $domain);
-              $url = $modx->makeUrl($id, $context);
-              if ($url !== $_SERVER['REQUEST_URI']){
-                $modx->sendRedirect($url);
-              }
+        } else if ($modx->getOption('catchway_search_in_other_contexts')) {
+          // search in other contexts if option catchway_search_in_other_contexts == true
+          $newContext = $Catchway->getContextKey($_COOKIE['catchway-city-name']);
+          if ($newContext) {
+            $modx->switchContext($newContext);
+            if ($siteUrl = $modx->getOption('site_url')) {
+              $modx->sendRedirect($siteUrl);
               break;
+            } else {
+              if (redirectToDefaultCityPage($modx, $context, $cookieNameId, $time, $domain))
+                break;
             }
+          } else {
+            if (redirectToDefaultCityPage($modx, $context, $cookieNameId, $time, $domain))
+              break;
           }
+        } else {
+          if (redirectToDefaultCityPage($modx, $context, $cookieNameId, $time, $domain))
+            break;
         }
       }
 
@@ -98,9 +122,9 @@ switch ($modx->event->name) {
   case 'OnUserActivate':
     if ($context == 'mgr') return;
     // update user
-    if (isset($_COOKIE['catchway-city-name'])){
+    if (isset($_COOKIE['catchway-city-name'])) {
       if ($profile = $modx->user->getOne('Profile')) {
-        if(!$profile->get('city')){
+        if (!$profile->get('city')) {
           $profile->set('city', $_COOKIE['catchway-city-name']);
           $profile->save();
         }
@@ -116,7 +140,7 @@ switch ($modx->event->name) {
     $resource =& $modx->event->params['resource'];
     if (isset($_POST['catchway-city'])) {
       $catchwayCity = $_POST['catchway-city'];
-    } else{
+    } else {
       $catchwayCity = '0';
     }
     $resource->setProperties(array('catchway_city' => $catchwayCity), 'catchway', false);

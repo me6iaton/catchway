@@ -10,3 +10,5 @@ $_lang['setting_catchway_default_page'] = 'Ресурс для перехода 
 $_lang['setting_catchway_default_page_desc'] = 'Id ресурса на который будет совершен преход когда нужный ресурс не найден, если значение не задано, пользователю будет показан диалог выбора ресурсов.';
 $_lang['setting_catchway_default_field_cityname'] = 'Поле для города';
 $_lang['setting_catchway_default_field_cityname_desc'] = 'Поле для ввода названия города';
+$_lang['setting_catchway_search_in_other_contexts'] = 'Искать в других контекстах';
+$_lang['setting_catchway_search_in_other_contexts_desc'] = 'Если ресурс не найден, выбрать первый найденный ресурс из других контекстов с нужным занчением';

@@ -27,10 +27,15 @@ $tmp = array(
     'value' => 'pagetitle',
     'xtype' => 'textfield',
     'area' => 'catchway.main',
-  )
-  ,'skip_contexts' => array(
+  ),
+  'skip_contexts' => array(
     'value' => '',
     'xtype' => 'textfield',
+    'area' => 'catchway.main',
+  ),
+  'search_in_other_contexts' => array(
+    'value' => true,
+    'xtype' => 'combo-boolean',
     'area' => 'catchway.main',
   ),
 );
